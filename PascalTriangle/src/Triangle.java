@@ -2,9 +2,36 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Triangle {
-    public static int testSuite(int n){
-        return computeNthRowIter(n);
+
+    public static long benchmark(String computeMethod, int numberOfTrials, int numberOfRows){
+        long bmStartTime = -1;
+        long bmFinishTime = -1;
+        long bmResult;
+
+        // run method and record time:
+        switch (computeMethod){
+            case "recursion":
+                bmStartTime = System.nanoTime();
+                for (int i = 0; i < numberOfTrials; i++){
+                    computeNthRowRec(numberOfRows);
+                }
+                bmFinishTime = System.nanoTime();
+                break;
+            case "iterative":
+                bmStartTime = System.nanoTime();
+                for (int i = 0; i < numberOfTrials; i++){
+                    computeNthRowIter(numberOfRows);
+                }
+                bmFinishTime = System.nanoTime();
+                break;
+        }
+
+        // calculate elapsed time
+        bmResult = bmFinishTime - bmStartTime;
+        return bmResult;
     }
+
+    public static int getRowSum(int row){return computeNthRowRec(row);}
 
     private static int computeNthRowRec(int n){
         // base case:
